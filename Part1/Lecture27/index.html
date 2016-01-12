@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<form id="formMessage" onsubmit="return onSubmit(event);">
+    <input type="text" id="messageSent" />
+    <input type="button" id="buttonSend" value="Send" onclick="send();" form="formMessage"/>
+</form>
+<div id="messagesReceived"></div>
+<script type="text/javascript">
+    function onSubmit(e){
+        send();
+        return false;
+    };
+    function send() {
+        var xhr = new XMLHttpRequest(),
+            mesageControl = document.getElementById('messageSent');
+        xhr.open('POST', 'send', true);
+        xhr.send(mesageControl.value);
+        mesageControl.value = null;
+    }
+    function receive(data){
+        if (data != "connect") {
+            var messages = document.getElementById('messagesReceived');
+            messages.innerHTML += data + "</br>";
+        }
+    }
+    function connect(){
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (this.readyState != 4) {
+                return;
+            }
+            if(xhr.status == 200) {
+                receive(xhr.responseText);
+            }
+            connect();
+        }
+        xhr.onerror = xhr.onabort = function(){
+            setTimeout(connect, 200)
+        }
+        xhr.open('POST', 'connect', true);
+        xhr.send();
+    }
+    connect();
+</script>
+</body>
+</html>
