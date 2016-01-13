@@ -7,16 +7,12 @@
     <script type="text/javascript" src="/vendor/bower_components/bootstrap/dist/js/bootstrap.js"></script>
 </head>
 <body>
-<header>
-    <%- blocks.header %>
-</header>
+<header><%- blocks.header %></header>
 <section class="container">
     <%- partial("../partials/topNavigation.ejs") %>
-    <%- blocks.title ? ("<h1>" + blocks.title + "</h1>") : "" %>
+    <%- (blocks.title ? ("<h1>" + blocks.title + "</h1>") : "") %>
     <%- body %>
 </section>
-<footer>
-    <%- blocks.footer %>
-</footer>
+<footer><%- blocks.footer %></footer>
 </body>
 </html>
