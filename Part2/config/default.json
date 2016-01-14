@@ -5,5 +5,14 @@
   },
   "mongoose":{
     "uri": "mongodb://localhost:27017/chart"
+  },
+  "session" :{
+    "name": "sid",
+    "secret": "secretKey",
+    "cookie": {
+      "path": "/",
+      "httpOnly": true,
+      "maxAge": null
+    }
   }
 }

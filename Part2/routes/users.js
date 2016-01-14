@@ -25,6 +25,8 @@ router.get('/:id', function(req, res, next) {
     if(!user) {
       return next(new HttpError(404, 'User not found'));
     }
+    req.session.requestCount = (req.session.requestCount + 1) || 1;
+    console.log(req.session.requestCount);
     res.json(user);
   });
 });
