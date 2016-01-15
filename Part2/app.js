@@ -10,7 +10,10 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var config = require('config');
 
-var users = require('./routes/users');
+var login = require('./routes/login');
+var logout = require('./routes/logout');
+var chart = require('./routes/chart');
+var index = require('./routes/index');
 var app = express();
 
 // view engine setup
@@ -32,8 +35,13 @@ app.use(session({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('./middleware/sendHttpError'));
+app.use(require('./middleware/loadUser'));
 
-app.use('/users', users);
+app.use('/chart', chart );
+app.use('/', index );
+app.use('/index', index );
+app.use('/login', login );
+app.use('/logout', logout);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -43,11 +51,11 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
-
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
+    console.log(err);
     if(err instanceof HttpError){
       res.sendHttpError(err);
     } else {

@@ -10,4 +10,15 @@ var HttpError = function(code, message){
 util.inherits(HttpError, Error);
 HttpError.prototype.name = "HttpError";
 
+
+var AuthError = function(message){
+    Error.apply(this, arguments);
+    this.message = message;
+}
+
+util.inherits(AuthError, Error);
+AuthError.prototype.name = "AuthError";
+
+
 module.exports.HttpError = HttpError;
+module.exports.AuthError = AuthError;
