@@ -10,6 +10,7 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var config = require('config');
 
+var checkAuth = require('./middleware/checkAuth');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
 var chart = require('./routes/chart');
@@ -33,11 +34,12 @@ app.use(session({
   secret: config.get('session').secret,
   store: new MongoStore({ mongooseConnection : mongoose.connection})
 }));
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('./middleware/sendHttpError'));
 app.use(require('./middleware/loadUser'));
 
-app.use('/chart', chart );
+app.use('/chart', checkAuth, chart);
 app.use('/', index );
 app.use('/index', index );
 app.use('/login', login );
