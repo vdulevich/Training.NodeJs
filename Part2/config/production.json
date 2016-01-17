@@ -1,9 +1,18 @@
 {
   "server": {
-    "host": "localhost",
-    "port": 3000
+    "host": "https://chart.herokuapp.com/",
+    "port": 80
   },
   "mongoose":{
-    "uri": "mongodb://localhost:27017/chart"
+    "uri": "mongodb://chart:chart@ds035975.mongolab.com:35975/heroku_mgh5927c"
+  },
+  "session" :{
+    "name": "sid",
+    "secret": "secretKey",
+    "cookie": {
+      "path": "/",
+      "httpOnly": true,
+      "maxAge": null
+    }
   }
 }
